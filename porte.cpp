@@ -1,21 +1,23 @@
 #include <Arduino.h>
 #include "porte.h"
 
-Porte::Porte(int pin_right, int pin_left) {
+Porte::Porte(int pin_right, int pin_left, byte val_open, byte val_close) {
   _left = pin_left;
   _right = pin_right;
+  _val_close = val_close;
+  _val_open = val_open;
 }
 
 void Porte::open(){
-  analogWrite(_left, 1);
-  analogWrite(_right, 1);
+  analogWrite(_left, _val_open);
+  analogWrite(_right, _val_open);
   _time_last_action = millis();
   _open = true;
 }
 
 void Porte::close(){
-  analogWrite(_left, 200);
-  analogWrite(_right, 200);
+  analogWrite(_left, _val_close);
+  analogWrite(_right, _val_close);
   _time_last_action = millis();
   _open = false;
 }
