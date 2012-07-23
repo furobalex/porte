@@ -1,30 +1,41 @@
-#include <Arduino.h>
+/* 
+   Fonctions gérant l'ouverture et la fermeture du robot principal
+   Auteurs : Jeremy et Aurélien
+   Derniere modif : 22/07/2012
+*/
+
+#include <arduino.h> // pour la fonction micros()
+#include <Servo.h>
+
 #include "porte.h"
 
-Porte::Porte(int pin_right, int pin_left, byte val_open, byte val_close) {
-  _left = pin_left;
-  _right = pin_right;
-  _val_close = val_close;
-  _val_open = val_open;
+static Servo servoLeft;
+static Servo servoRight;
+static int pos = 0;
+static unsigned long tpsPrec = 0;
+
+void ouvrirPorte()//la fonction qui ouvre les portes.
+{
+    pos = 180;
 }
 
-void Porte::open(){
-  analogWrite(_left, _val_open);
-  analogWrite(_right, _val_open);
-  _time_last_action = millis();
-  _open = true;
+void fermerPorte()//la fonction qui ferme les portes.
+{
+   pos = 0;
 }
 
-void Porte::close(){
-  analogWrite(_left, _val_close);
-  analogWrite(_right, _val_close);
-  _time_last_action = millis();
-  _open = false;
+// a ajouter a l'initialisation
+void initialisation()
+{
+    // ajout des pins au programme
+  servoLeft.attach(SERVOMOTOR_LEFT); 
+  servoRight.attach(SERVOMOTOR_RIGHT);
 }
 
-
-
-bool Porte::isFinished(){
-  if((millis() - _time_last_action) >= TIME_ACTION) return true; 
-  else return false;
+// a ajouter a l'update
+void update()
+{
+    tpsPrec = micros();
+    servoLeft.write(pos);
+    servoRight.write(pos);
 }

@@ -1,17 +1,21 @@
-#define TIME_ACTION 1000
+/* 
+   Prototypes de fonctions ouvrant et fermant les portes
+   Auteurs : Jeremy et Aurélien
+   Derniere modif : 22/07/2012
+*/
 
-class Porte {
-public:
-                Porte(int pin_right, int pin_left, byte val_close , byte val_close);
-  void          open();
-  void          close();
-  bool          isFinished();
+#ifndef PORTE
 
-private:
-  byte          _left;
-  byte          _right;
-  bool          _open;
-  unsigned long _time_last_action;
-  byte          _val_open;
-  byte          _val_close;
-};
+  #define PORTE
+  
+  #define SERVOMOTOR_LEFT 10
+  #define SERVOMOTOR_RIGHT 9
+  
+  void ouvrirPorte();
+  void fermerPorte();
+  void initialisation();
+  void update();
+  
+#endif
+  
+  
